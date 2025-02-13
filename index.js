@@ -19,9 +19,9 @@ import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 export const INCLUDE_LIST = ['**/*.ts']
 
 /**
- * Default set of files to ignore
+ * List of files that must be ignored globally
  */
-export const IGNORE_LIST = [
+export const GLOBAL_IGNORE_LIST = [
   'eslint.config.js',
   'eslint.config.ts',
   '*.min.*',
@@ -33,16 +33,15 @@ export const IGNORE_LIST = [
   'coverage/**',
   'temp/**',
   'build/**',
-  'dist/**',
-  'public/assets/**',
   'pnpm-lock.yaml',
   'yarn.lock',
   'package-lock.json',
-  '__snapshots__/**',
-  'resources/**',
-  '!.github',
-  '!.vscode',
 ]
+
+/**
+ * Default set of files to ignore
+ */
+export const ADONIS_IGNORE_LIST = ['public/assets/**', '__snapshots__/**', 'resources/**']
 
 /**
  * Default set of plugins to apply to the config
@@ -173,11 +172,12 @@ export const RULES_LIST = {
  *   }
  * })
  * ```
- *
- * @param {import('typescript-eslint').ConfigWithExtends[]} configBlocksToMerge
  */
 export function configPkg(...configBlocksToMerge) {
   return tseslint.config(
+    {
+      ignores: GLOBAL_IGNORE_LIST,
+    },
     tseslint.configs.base,
     {
       name: 'Plugins list',
@@ -186,7 +186,7 @@ export function configPkg(...configBlocksToMerge) {
     {
       name: 'AdonisJS pkg defaults',
       files: INCLUDE_LIST,
-      ignores: IGNORE_LIST,
+      ignores: ADONIS_IGNORE_LIST,
       rules: RULES_LIST,
     },
     ...configBlocksToMerge
@@ -211,11 +211,12 @@ export function configPkg(...configBlocksToMerge) {
  *   }
  * })
  * ```
- *
- * @param {import('typescript-eslint').ConfigWithExtends[]} configBlocksToMerge
  */
 export function configApp(...configBlocksToMerge) {
   return tseslint.config(
+    {
+      ignores: GLOBAL_IGNORE_LIST,
+    },
     tseslint.configs.base,
     {
       name: 'Plugins list',
@@ -227,7 +228,7 @@ export function configApp(...configBlocksToMerge) {
     {
       name: 'AdonisJS app defaults',
       files: INCLUDE_LIST,
-      ignores: IGNORE_LIST,
+      ignores: ADONIS_IGNORE_LIST,
       rules: {
         ...RULES_LIST,
         '@adonisjs/prefer-lazy-controller-import': ['error'],
