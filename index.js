@@ -148,7 +148,7 @@ export const RULES_LIST = {
  * })
  * ```
  */
-export function configPkg(...configBlocksToMerge) {
+export function configPkg(configBlocksToMerge) {
   return tseslint.config(
     { ignores: GLOBAL_IGNORE_LIST },
     tseslint.configs.base,
@@ -182,7 +182,7 @@ export function configPkg(...configBlocksToMerge) {
  * })
  * ```
  */
-export function configApp(...configBlocksToMerge) {
+export function configApp(configBlocksToMerge) {
   return tseslint.config(
     { ignores: GLOBAL_IGNORE_LIST },
     tseslint.configs.base,
